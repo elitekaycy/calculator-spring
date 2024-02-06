@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+       stage('Checkout') {
+          // checkout the code from Git
+          git 'https://github.com/elitekaycy/calculator-spring.git'
+       }
+
+       stage('Clean') {
+           steps {
+             // clean mvn project
+             sh 'mvn clean'
+           }
+       }
+
+       stage('Build') {
+          steps {
+             // build the mvn project
+             sh 'mvn package -DskipTests=true'
+          }
+       }
+
+       stage('Compile') {
+          steps {
+             sh 'mvn compile'
+          }
+       }
+
+       stage('Build Docker Image') {
+           steps {
+              // build docker image
+              sh 'docker build -t calculator/calculator-app:latest .'
+           }
+       }
+
+       stage('Login and Push image to docker hub') {
+            steps {
+              script {
+                  withCredentials([string(credentialsId: 'jenkins-dockerhub', variable: 'jenkins-dockerhub']) {
+                         sh 'docker login -u elitekaycy -p ${jenkins-dockerhub}'
+
+                         sh 'docker push calculator/calculator-app'
+                    }
+                  }
+              }
+            }
+       }
+    }
+}
