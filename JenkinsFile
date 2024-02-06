@@ -4,7 +4,7 @@ pipeline {
     stages {
        stage('Checkout') {
           // checkout the code from Git
-          git 'https://github.com/elitekaycy/calculator-spring.git'
+          checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elitekaycy/calculator-spring.git']])
        }
 
        stage('Clean') {
