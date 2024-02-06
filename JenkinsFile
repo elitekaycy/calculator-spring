@@ -6,26 +6,7 @@ pipeline {
           // checkout the code from Git
           steps {
             checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elitekaycy/calculator-spring.git']])
-          }
-       }
-
-       stage('Clean') {
-           steps {
-             // clean mvn project
-             sh 'mvn clean'
-           }
-       }
-
-       stage('Build') {
-          steps {
-             // build the mvn project
-             sh 'mvn package -DskipTests=true'
-          }
-       }
-
-       stage('Compile') {
-          steps {
-             sh 'mvn compile'
+            sh 'mvn clean install'
           }
        }
 
