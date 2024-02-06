@@ -1,2 +1,7 @@
-package org.fundamental.service.memory;public class FileNotCreatedException {
+package org.fundamental.exception;
+
+public class FileNotCreatedException extends Exception {
+    public FileNotCreatedException(String s) {
+        super(s);
+    }
 }
