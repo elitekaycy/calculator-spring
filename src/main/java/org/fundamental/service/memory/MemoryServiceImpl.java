@@ -1,12 +1,20 @@
 package org.fundamental.service.memory;
 
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.util.List;
 
-public class Memory {
+
+@Service
+public class MemoryServiceImpl {
     private static double memory = 0;
     private static String MEMORY_CURRENT = "";
     private static final String MEMORY_NAME = "calculator";
+
+    public MemoryServiceImpl() throws IOException {
+        FileServiceImpl.createFile(MEMORY_NAME);
+    }
 
     public double getMemory() {
         return memory;
