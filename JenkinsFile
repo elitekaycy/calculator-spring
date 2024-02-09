@@ -12,8 +12,13 @@ pipeline {
 
        stage('Build Docker Image') {
            steps {
-              // build docker image
-              bat 'docker build -t calculator/calculator-app:latest .'
+             script {
+                   // Define Dockerfile location
+                   def dockerfile = './DockerFile'
+
+                   // Build Docker image
+                   docker.build('calculator/calculator-app:latest', '-f ${dockerfile} .')
+              }
            }
        }
 
