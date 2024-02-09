@@ -18,14 +18,15 @@ pipeline {
        }
 
        stage('Login and Push image to docker hub') {
-            steps {
-              script {
-              withCredentials([string(credentialsId: 'jenkins-dockerhub', variable: 'jenkins-dockerhub')]) {
-                         bat 'docker login -u elitekaycy -password-stdin $jenkins-dockerhub'
+          steps {
+                 withCredentials([string(credentialsId: 'jenkins-dockerhub', variable: 'DOCKERHUB_CREDENTIAL')]) {
+                     // Log in to Docker Hub
+                     bat "echo ${DOCKERHUB_CREDENTIAL} | docker login -u elitekaycy --password-stdin"
 
-                         bat 'docker push calculator/calculator-app'
-              }
-             }
+                     // Push the Docker image to Docker Hub
+                     bat "docker push calculator/calculator-app"
+                         }
+                     }
               }
             }
        }
