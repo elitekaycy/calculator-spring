@@ -6,14 +6,14 @@ pipeline {
           // checkout the code from Git
           steps {
             checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/elitekaycy/calculator-spring.git']])
-            sh 'mvn clean install'
+            bat 'mvn clean install'
           }
        }
 
        stage('Build Docker Image') {
            steps {
               // build docker image
-              sh 'docker build -t calculator/calculator-app:latest .'
+              bat 'docker build -t calculator/calculator-app:latest .'
            }
        }
 
@@ -21,9 +21,9 @@ pipeline {
             steps {
               script {
               withCredentials([string(credentialsId: 'jenkins-dockerhub', variable: 'jenkins-dockerhub')]) {
-                         sh 'docker login -u elitekaycy -p ${jenkins-dockerhub}'
+                         bat 'docker login -u elitekaycy -p ${jenkins-dockerhub}'
 
-                         sh 'docker push calculator/calculator-app'
+                         bat 'docker push calculator/calculator-app'
               }
              }
               }
