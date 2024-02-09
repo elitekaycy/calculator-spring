@@ -21,7 +21,7 @@ pipeline {
             steps {
               script {
               withCredentials([string(credentialsId: 'jenkins-dockerhub', variable: 'jenkins-dockerhub')]) {
-                         bat 'docker login -u elitekaycy -p ${jenkins-dockerhub}'
+                        bat "docker login -u username -p '${jenkins-dockerhub}'"
 
                          bat 'docker push calculator/calculator-app'
               }
